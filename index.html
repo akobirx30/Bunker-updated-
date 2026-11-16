@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bunker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Special+Elite&display=swap">
+<style>
+:root{--bg:#10120b;--bg2:#252b16;--cd:#1d2114;--tx:#ece8d2;--mu:#8f917a;--ac:#f2a516;--rd:#e2492f;--ok:#86c06d;--bd:#3a4026;--h:"Oswald","Arial Narrow",Impact,sans-serif;--b:"Special Elite","Courier New",monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e6dfc4;--bg2:#f4eed8;--cd:#f8f3e0;--tx:#25271a;--mu:#6a6a52;--ac:#b86e00;--rd:#b8321c;--ok:#3f7a2e;--bd:#b9b08a}}
+:root[data-theme="light"]{--bg:#e6dfc4;--bg2:#f4eed8;--cd:#f8f3e0;--tx:#25271a;--mu:#6a6a52;--ac:#b86e00;--rd:#b8321c;--ok:#3f7a2e;--bd:#b9b08a}
+html,body{margin:0;min-height:100%;background:var(--bg);background-image:radial-gradient(ellipse at 50% 0,var(--bg2),transparent 65%),repeating-linear-gradient(0deg,transparent 0 31px,rgba(128,128,100,.07) 31px 32px);color:var(--tx);font:15px/1.45 var(--b)}
+#app{max-width:520px;margin:0 auto;padding:14px 14px 40px}
+h1,h2,h3{font-family:var(--h);text-transform:uppercase;letter-spacing:3px;margin:.3em 0}
+h1{font-size:50px;color:var(--ac);text-align:center;margin:6px 0 0;text-shadow:0 3px 0 rgba(0,0,0,.35)}
+h2{font-size:22px}.mu{color:var(--mu);font-size:13px}.c{text-align:center}
+.stripe{height:12px;background:repeating-linear-gradient(-45deg,var(--ac) 0 12px,#111 12px 24px);margin:8px 0;border-radius:2px}
+.box{background:var(--cd);border:2px solid var(--bd);border-radius:10px;padding:12px;margin:12px 0}
+.box.al{border-color:var(--rd)}.box.ok{border-color:var(--ok)}
+.lab{font-family:var(--h);letter-spacing:2px;text-transform:uppercase;font-size:12px;color:var(--ac)}
+.cat{display:flex;gap:12px;align-items:center}.cat .e{font-size:54px;line-height:1}
+.seats{font-size:22px;letter-spacing:2px}.seats s{opacity:.25;text-decoration:none}
+.steps{display:flex;gap:6px;margin:10px 0}.steps span{flex:1;text-align:center;font:700 13px var(--h);letter-spacing:2px;text-transform:uppercase;padding:6px 0;border-bottom:3px solid var(--bd);color:var(--mu)}
+.steps span.on{color:var(--ac);border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cd{position:relative;background:var(--cd);border:2px solid var(--bd);border-top:0;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding-bottom:12px;min-height:170px;box-shadow:0 4px 0 rgba(0,0,0,.3)}
+.cd.wide{grid-column:span 2;min-height:140px}
+.ct{width:100%;display:flex;justify-content:space-between;padding:6px 10px;box-sizing:border-box;background:var(--cc);color:#111;font:700 12px var(--h);letter-spacing:2px;text-transform:uppercase}
+.cd .big{font-size:48px;line-height:1.1;margin-top:6px}.cd .v{padding:0 8px;font-size:14px}
+.cd:not(.rv){border-style:dashed;border-top:0}
+.cd.rv{border-color:var(--ok);animation:pop .45s ease-out}
+.cd.rv::after{content:"REVEALED";position:absolute;right:-6px;bottom:10px;font:700 12px var(--h);letter-spacing:2px;color:var(--ok);border:2px solid var(--ok);padding:0 6px;transform:rotate(-12deg);background:var(--cd)}
+@keyframes pop{0%{transform:scale(.85) rotate(-3deg);opacity:.4}60%{transform:scale(1.04)}100%{transform:none;opacity:1}}
+.dos{border-top:1px dashed var(--bd);padding:10px 0}.dos.out{opacity:.6}
+.dh{display:flex;align-items:center;gap:8px;margin-bottom:6px}.dh em{margin-left:auto;font:700 11px var(--h);letter-spacing:2px;color:var(--rd);font-style:normal}.dh em.rd{color:var(--ok)}
+.av{width:30px;height:30px;border-radius:50%;background:var(--ac);color:#111;display:inline-flex;align-items:center;justify-content:center;font:700 15px var(--h)}
+.tiles{display:flex;flex-wrap:wrap;gap:5px}
+.tile{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--cc);border-left-width:4px;border-radius:4px;padding:2px 7px;font-size:12px}
+.tile.lk{opacity:.4;border-style:dashed}.tile b{font-weight:400}.tile i{font-style:normal}
+.chip{display:inline-block;border:1px solid var(--bd);padding:2px 8px;margin:2px;border-radius:3px;font-size:13px}
+button{font:700 15px var(--h);letter-spacing:2px;text-transform:uppercase;color:var(--tx);background:var(--cd);border:2px solid var(--bd);border-radius:6px;padding:10px 14px;min-height:44px;cursor:pointer}
+button.pri{background:var(--ac);color:#111;border-color:var(--ac)}
+button.vb{display:flex;align-items:center;gap:10px;width:100%;margin:6px 0;border-color:var(--rd)}
+button.vb.sel{background:var(--rd);color:#fff}
+button:disabled{opacity:.35}.cd button{margin-top:auto}
+input{font:inherit;width:100%;box-sizing:border-box;padding:12px;margin:6px 0;border:2px solid var(--bd);border-radius:6px;background:var(--cd);color:var(--tx)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.row button{flex:1}
+.code{font:700 54px var(--h);letter-spacing:10px;text-align:center;color:var(--ac)}
+.stamp{font:700 40px var(--h);letter-spacing:4px;color:var(--rd);border:4px solid var(--rd);display:inline-block;padding:2px 14px;transform:rotate(-6deg);margin:8px 0}
+
+html,body{background-color:#8d908e;background-image:radial-gradient(circle at 20% 8%,rgba(255,255,255,.22),transparent 40%),radial-gradient(circle at 85% 75%,rgba(0,0,0,.2),transparent 45%),repeating-linear-gradient(90deg,transparent 0 139px,rgba(0,0,0,.13) 139px 140px),repeating-linear-gradient(0deg,transparent 0 139px,rgba(0,0,0,.13) 139px 140px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) html,html,body{background-color:#34373a}}
+h1{color:#f2c200;font-size:60px;letter-spacing:5px;text-shadow:3px 3px 0 #000,-1px -1px 0 #000;transform:rotate(-1.5deg)}
+.gc{position:relative;border:5px solid var(--cc);border-radius:12px;background:#f2c200 repeating-linear-gradient(115deg,transparent 0 23px,rgba(0,0,0,.05) 23px 25px);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 0 rgba(0,0,0,.35);color:#111;animation:pop .35s ease-out}
+.gc.hz{border:5px solid;border-image:repeating-linear-gradient(-45deg,#f2c200 0 8px,#111 8px 16px) 5}
+.gh,.gf{background:#141414;color:#fff;font:700 13px var(--h);letter-spacing:2px;text-align:center;text-transform:uppercase;padding:6px 4px}
+.gf{min-height:36px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.gb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 8px;min-height:104px}
+.gi{font-size:58px;line-height:1;filter:brightness(0)}.gb .gi:not(:only-child){font-size:40px}
+.gt{font:600 12px/1.35 var(--b);text-align:center}
+.gc.rv::after{content:"SHOWN";position:absolute;right:4px;top:34px;font:700 12px var(--h);letter-spacing:2px;color:#111;border:2px solid #111;padding:0 6px;transform:rotate(10deg);background:rgba(242,194,0,.9)}
+.gc.w,.gc.w.hz{grid-column:span 2}
+.gbtn{background:#141414;color:#f2c200;border:0;border-top:2px solid #f2c200;border-radius:0;width:100%;min-height:42px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hs{display:flex;gap:10px;overflow-x:auto;padding:8px 2px}.hs .gc{min-width:150px;max-width:150px}
+.lv{min-height:36px;padding:6px 12px;font-size:13px;margin:6px 0;background:transparent}
+.box{background-image:linear-gradient(rgba(255,255,255,.05),transparent);box-shadow:0 5px 0 rgba(0,0,0,.35);position:relative}
+.box::before,.box::after{content:"";position:absolute;top:4px;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#bbb,#444)}
+.box::before{left:4px}.box::after{right:4px}
+button{transition:transform .08s,box-shadow .08s;box-shadow:0 4px 0 rgba(0,0,0,.4)}
+button:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.4)}
+button.pri{box-shadow:0 4px 0 #8a6200}
+.code{display:flex;justify-content:center;gap:8px;margin:8px 0;letter-spacing:0}
+.code span{width:52px;height:68px;display:flex;align-items:center;justify-content:center;background:#141414;color:#f2c200;font:700 44px var(--h);border:3px solid #f2c200;border-radius:8px;box-shadow:0 4px 0 rgba(0,0,0,.4)}
+.steps span{border:2px solid var(--bd);border-radius:20px;padding:4px 0;background:rgba(0,0,0,.2)}
+.steps span.on{background:var(--ac);color:#111;border-color:var(--ac)}
+.lab{display:flex;align-items:center;gap:8px}
+.lab::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--ac) 0 6px,transparent 6px 12px)}
+.lab.c{justify-content:center}
+.stamp{animation:slam .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes slam{0%{transform:rotate(-6deg) scale(3);opacity:0}100%{transform:rotate(-6deg) scale(1);opacity:1}}
+.gc{transition:transform .15s}.gc:hover{transform:translateY(-3px) rotate(-.5deg)}
+.gc.rv{animation:flip .6s ease-out}
+@keyframes flip{0%{transform:rotateY(90deg) scale(.9)}100%{transform:none}}
+.dos{background:rgba(0,0,0,.2);border:0;border-radius:8px;padding:10px;margin:8px 0}
+.hs{scroll-snap-type:x mandatory}.hs .gc{scroll-snap-align:start}
+</style></head><body><div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+const CATS=[["prof","Profession","💼","#ffffff"],["bio","Biology","🧬","#f28c28"],["health","Health","❤️","#d93a2b"],["hobby","Hobby","🎯","#4aa83c"],["fact","Fact","⚠️","#27b3d9"],["bag","Baggage","🎒","#2a5bd7"],["spec","Special condition","⚡","#8a4fd0"]];
+const AGES=[19,23,27,31,35,39,44,48,52,57,61,66];
+const D={
+prof:["🩺 Surgeon","🌾 Farmer","🔌 Electrician","🍳 Chef","📚 Teacher","🔧 Mechanic","🎖️ Soldier","🧪 Biologist","📐 Engineer","💉 Nurse","🏹 Hunter","💻 Programmer","🧠 Psychologist","🪚 Carpenter","✈️ Pilot","💊 Pharmacist","👓 Stylist","🔨 Builder","🚒 Firefighter","👮 Police officer","⚖️ Lawyer","📰 Journalist","🎭 Actor","🎨 Painter","🎤 Singer","🚕 Taxi driver","🚜 Tractor driver","🧹 Janitor","🦷 Dentist","🐄 Vet","⚗️ Chemist","🔬 Geologist","🛠️ Plumber","🪡 Tailor","🍞 Baker","🥩 Butcher","📡 Radio operator","🚀 Astronaut","🧑‍🏫 Professor","🎓 Student","💼 Accountant","📈 Banker","🏛️ Politician","⛪ Priest","🐝 Beekeeper","🎪 Circus clown","🕵️ Detective","🧶 Knitter","🚂 Train driver","🌐 Sysadmin"],
+bio:[...AGES.map(a=>"♂ Male, "+a),...AGES.map(a=>"♀ Female, "+a),"🦎 Reptiloid","🤖 Cyborg","🧛 Vampire","🐺 Werewolf","👽 Alien","🧟 Immune zombie","🧜 Merfolk","👼 Eternal child"],
+health:["💪 Perfectly healthy","🫁 Asthma","🩸 Diabetes","🦴 Bad back","🤧 Allergic to dust","🖐️ Missing a finger","🪨 Iron stomach","🫀 Weak heart","👓 Poor eyesight","🏃 Athlete shape","😷 Chronic cough","🛡️ Immune to flu","🍔 Eternally hungry","😴 Insomnia","🦻 Almost deaf","🧊 Cold intolerance","🔥 Heat intolerance","🌸 Hay fever","🥜 Nut allergy","🦵 Limp","🧠 Migraines","🍷 Alcoholic","🚬 Heavy smoker","💤 Sleepwalker","🩹 Fragile bones","🦷 Bad teeth","🧬 Great genes","🫧 Hiccups","😵 Dizzy spells","🧴 Skin disease","🏋️ Very strong","🌡️ Always feverish"],
+hobby:["🌱 Gardening","♟️ Chess","🎣 Fishing","🎸 Guitar","🍲 Cooking","🥊 Boxing","📖 Storytelling","🧵 Sewing","📻 Radio tinkering","🧘 Yoga","🍺 Brewing","🧗 Rock climbing","🤹 Juggling","⚽ Football","🏊 Swimming","🎯 Archery","📸 Photography","🎲 Board games","🧩 Puzzles","🪕 Banjo","🎹 Piano","💃 Dancing","🚴 Cycling","🔭 Stargazing","🐦 Birdwatching","🪵 Woodcarving","🧪 Home chemistry","✍️ Poetry","🏕️ Camping","🦋 Collecting insects","🃏 Card tricks","🎬 Film buff"],
+fact:["🤥 Secret liar","🗣️ Speaks 5 languages","⭐ Famous brother","💸 Owes a fortune","⚙️ Fixes any machine","😴 Sleeps 3 hours","⛓️ Was in prison","📶 Knows morse code","🥴 Terrible cook","🪴 Talks to plants","👑 Natural leader","🙅 Hates animals","🖐️ 6 fingers on hands","🎰 Gambling addict","🧬 Secretly a clone","🕵️ Ex-spy","🍀 Always lucky","💀 Believes they are cursed","🏆 Olympic medalist","👶 Has twin babies","📜 Wrote a bestseller","🔮 Believes in omens","🧯 Survived 3 fires","👻 Sees ghosts","🔑 Can pick locks","🥶 Never feels cold","🐍 Keeps a snake","🗺️ Knows every road","🎻 Concert violinist","🧠 Photographic memory","😈 Loves arguments","🤐 Silent for a year","🪙 Hides gold","🏥 Fake diploma","🌍 Visited 100 countries","🥋 Black belt","🧼 Obsessed with cleaning","🍳 Eats raw eggs","📞 Knows everyone’s secrets","🦸 Once saved a mayor","🎩 Amateur magician","🔥 Arsonist in youth","🥷 Moves silently","🧸 Carries a teddy bear","🧅 Cries only at onions","🕰️ Always late","🌙 Sleepwalking cook","🪞 Talks to mirrors","🛶 Sailed the Atlantic","🥇 Won the lottery"],
+bag:["🩹 First aid kit","🌽 Seed bag","🧰 Toolbox","🚰 Water filter","🏹 Hunting bow","🎲 Board games","🔋 Solar charger","📚 Pile of books","🥃 Case of whiskey","📡 Satellite radio","🍳 Camping stove","💉 Vaccine set","🏮 Kerosene lamp","🔦 Flashlight","🪓 Axe","🧭 Compass","🥫 Canned food","🧼 Soap stash","🔥 Matches","📱 Phone full of films","🎸 Old guitar","🧸 Teddy bear","🪢 Rope","🔪 Knife set","🐓 Pet chicken","🧥 Warm coats","🥾 Good boots","🗺️ Maps","💊 Painkillers","🧂 Sack of salt","🎧 Headphones","🔧 Wrench"],
+spec:["🛡️ Immunity|Nobody may vote for you this round.","🔄 Swap|Trade one card with another player.","🕵️ Spy|Peek at one hidden card of a player.","🚫 Veto|Cancel one vote.","💬 Silence|Mute one player this round.","🎁 Gift|Give your Baggage to someone.","🔁 Reroll|Replace your Fact with a new one.","⏱️ Extra time|Speak twice as long.","👁️ Expose|Make a player show one more card.","🧲 Steal|Take another player’s Baggage.","🎭 Impostor|Swap professions with someone.","⚖️ Double vote|Your vote counts twice.","🧊 Freeze|A player cannot reveal this round.","🩹 Cure|Remove your Health problem.","🔮 Prophecy|Say who will be expelled.","🧠 Mind reading|Ask one yes or no question.","🕊️ Pardon|Save a player after the vote.","🎲 Gamble|Flip a coin: expel or save yourself.","📣 Rally|Name two players to vote together.","🪞 Mirror|Copy another player’s special card.","🧪 Antidote|Ignore the next Threat.","🔒 Lockdown|Only you speak for one minute.","🌀 Chaos|Everyone passes a card to the left.","✂️ Cut|Remove one revealed card from play.","🧳 Bribe|Offer your Baggage for a vote.","🔍 Audit|Force a player to reveal a Fact.","👥 Alliance|Pick a partner. You vote the same.","⏭️ Skip|You may skip this round’s reveal.","📜 Rewrite|Swap your Hobby for a new one.","💤 Nap|Skip speaking this round.","🏴 Mutiny|Call a second vote.","🎉 Party|Everyone laughs. You reveal a free card."],
+bun:["🍞 Food for 2 years|Dry rations stacked to the ceiling.","🚰 Water purifier|Clean water for everyone.","🌱 Greenhouse|A small garden under UV lamps.","🏥 Medical bay|Beds, bandages and a surgical table.","🔫 Armory|Rifles, ammo and a locked cabinet.","📚 Library|Ten thousand books and a quiet room.","🏋️ Gym|Weights and a punching bag.","⚡ Broken generator|Works only half the day.","📡 Radio room|You can hear the outside world.","🔋 Power for 1 year|Enough for lights and heat.","🛏️ Tiny bunks|Everyone sleeps in shifts.","🍳 Big kitchen|Stoves, pots and a freezer.","🎬 Cinema|One projector, 50 films.","🧫 Laboratory|Microscopes and chemicals.","🐓 Chicken coop|Eggs every morning.","🔭 Observation deck|A view of the dead world.","🛁 Showers|Hot water, three minutes each.","🧯 Fire system|Sprinklers in every room.","🍷 Wine cellar|Barrels of old wine.","🛠️ Workshop|Tools for any repair.","🕳️ Secret tunnel|Leads somewhere unknown.","🧸 Playroom|Toys and a tiny school.","📺 Server room|Data from the old world.","🚪 Double airlock|Two doors keep the air clean.","🪴 Mushroom farm|Cheap food, strange taste.","🎹 Piano hall|One out-of-tune piano.","🌡️ Weak heating|Cold nights ahead.","💣 Mined entrance|Traps for visitors.","🚽 Broken toilets|Plumbing is a nightmare.","🧊 Cold storage|A freezer packed with meat."],
+thr:["🐕 Mutant dogs|They dig toward your door.","💧 Water leak|The main tank is cracking.","🔥 Fire|A short circuit is spreading.","🦠 Outbreak|Someone inside coughs blood.","⚡ Blackout|The generator is dying.","🐀 Rats|Giant rats eat your food.","🧟 Intruders|Strangers bang on the hatch.","🌡️ Overheating|The reactor runs hot.","🧪 Mold|Green spores in the vents.","🚪 Jammed door|The hatch will not close.","📻 Strange signal|Voices demand entry.","🌱 Crop blight|The greenhouse is wilting.","🤯 Cabin fever|People start to lose their minds.","🥫 Spoiled food|Half the cans are bad.","🔊 Noises|Something knocks in the walls.","💥 Gas leak|The kitchen smells wrong.","🧱 Cracks|Walls crack from tremors.","💬 Mutiny|Part of the crew wants the keys.","🛰️ Falling satellite|It may hit the bunker.","❄️ Freezing|Heating has stopped.","🕳️ Sinkhole|Storage floor collapses."]};
+const CAT=[["☢️","Nuclear Winter","Ash covers the sky. The surface is frozen for years."],["🧟","Zombie Plague","A virus turned most of humanity hostile."],["🌊","Flooded World","Oceans rose and swallowed every coast."],["👽","Alien Invasion","Ships in orbit. Cities burn."],["☣️","Toxic Fog","Poisonous air creeps over the land."],["🤖","Machine Uprising","Robots decided humans are the problem."],["☄️","Giant Meteor","A rock the size of a city hit the planet."],["🌋","Super Volcano","The sky is black. Crops are dead."],["🐈","Mutant Cats","Giant hungry cats rule the ruins."],["☀️","Solar Flare","The sun burned every machine and every field."]];
+const KEYS=["prof","bio","health","hobby","fact","bag","spec"];
+let R=null,code="",host=false,S=null,nm="",hasRoom=true,hs=0;
+const myId=()=>{const p=R&&R.peers().find(x=>x.sameTab);return p?p.peer:""};
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const alive=()=>S.players.filter(p=>!p.out);
+const val=(p,k)=>D[k][p.c[k]];
+const ico=v=>v.split(" ")[0],txt=v=>v.slice(v.indexOf(" ")+1);
+function push(){R.emit("state",S);render()}
+function startGame(){
+ const ps=R.peers().filter(p=>p.presence.name).slice(0,8).map(p=>({id:p.peer,name:String(p.presence.name).slice(0,14),out:0,rr:0,rev:[],c:{}}));
+ if(ps.length<3)return;
+ const pl=k=>sh(D[k].map((_,i)=>i)),pools={};KEYS.forEach(k=>pools[k]=pl(k));
+ ps.forEach((p,i)=>KEYS.forEach(k=>p.c[k]=pools[k][i]));
+ S={phase:"reveal",round:1,cat:Math.floor(Math.random()*CAT.length),cap:Math.max(1,Math.floor(ps.length/2)),bun:pl("bun").slice(0,6),thr:pl("thr").slice(0,4),players:ps,votes:{},res:null};
+ push()}
+function act(m,from){
+ if(!host||!S)return;const p=S.players.find(x=>x.id===from);if(!p||p.out)return;
+ if(m.type==="reveal"&&S.phase==="reveal"&&p.rr<1&&(m.k in p.c)&&!p.rev.includes(m.k)){
+  if(S.round===1&&m.k!=="prof")return;p.rev.push(m.k);p.rr++;push()}
+ else if(m.type==="vote"&&S.phase==="vote"){
+  const t=S.players.find(x=>x.id===m.t);if(!t||t.out||t.id===from)return;S.votes[from]=t.id;
+  if(allVoted()){
+   const n={};Object.values(S.votes).forEach(v=>n[v]=(n[v]||0)+1);const mx=Math.max(...Object.values(n)),top=Object.keys(n).filter(k=>n[k]===mx);
+   const id=top[Math.floor(Math.random()*top.length)];S.players.find(x=>x.id===id).out=1;
+   S.res={id,tie:top.length>1,n:mx};S.phase="result"}
+  push()}
+}
+function hostGo(w){
+ if(w==="vote"){S.phase="vote";S.votes={}}
+ else if(w==="next"){
+  if(alive().length<=S.cap){S.phase="over"}
+  else{S.round++;S.phase="reveal";S.res=null;S.votes={};S.players.forEach(p=>p.rr=0)}}
+ push()}
+const send=m=>host?act(m,myId()):R.emit("act",m);
+function allVoted(){return Object.keys(S.votes).length>0&&alive().filter(x=>!x.off).every(x=>S.votes[x.id])}
+function hl(){return(!host&&hs&&R&&!R.peers().some(p=>p.presence.host))?el("div","box al c","The host has left the room. Leave and create a new one."):""}
+async function leave(){try{await R.leave()}catch(e){}R=null;S=null;host=false;code="";render()}
+function lb(){const b=el("button","lv","← Leave room");let s=0;b.onclick=()=>{if(!S||S.phase==="over"||s){leave();return}s=1;b.textContent="Tap again to leave";setTimeout(()=>{s=0;b.textContent="← Leave room"},3000)};return b}
+async function enter(c,h){
+ const room=await claude.use("room");if(!room){hasRoom=false;render();return}
+ try{R=await room.join("bk-"+c)}catch(e){hasRoom=false;render();return}
+ code=c;host=h;hs=0;R.presence({name:nm,host:h?1:0});
+ R.on("state",m=>{if(!host){S=m.data;render()}});
+ R.on("act",m=>{if(host)act(m.data,m.peer)});
+ R.onPeers(ch=>{if(host&&S){let c=0;ch.left.forEach(l=>{const p=S.players.find(x=>x.id===l.peer);if(p&&!p.off){p.off=1;c=1}});ch.joined.forEach(j=>{const p=S.players.find(x=>x.id===j.peer);if(p&&p.off){p.off=0;c=1}});if(S.phase==="vote"&&c){const v=Object.keys(S.votes)[0];if(v)act({type:"vote",t:S.votes[v]},v)}if(c||ch.joined.length)push()}if(!host&&R.peers().some(p=>p.presence.host))hs=1;render()});
+ render()}
+function form(a){
+ a.append(el("div","stripe"),el("h1","","Bunker"),el("div","stripe"));
+ a.append(el("p","c mu","The world has ended. Only a few will survive. Convince the others you deserve a place."));
+ if(!hasRoom)a.append(el("p","","Could not connect to a room. Open this page while signed in to Claude."));
+ const n=el("input");n.placeholder="Your name";n.value=nm;n.oninput=()=>nm=n.value.trim().slice(0,14);
+ const c=el("input");c.placeholder="Room code (to join a friend)";c.maxLength=4;
+ const b1=el("button","pri","Create room"),b2=el("button","","Join");
+ b1.onclick=()=>{if(!nm)return n.focus();enter(Array.from({length:4},()=>"abcdefghjkmnpqrstuvwxyz"[Math.floor(Math.random()*23)]).join(""),true)};
+ b2.onclick=()=>{if(!nm)return n.focus();const k=c.value.trim().toLowerCase();/^[a-z0-9]{4}$/.test(k)?enter(k,false):c.focus()};
+ const r=el("div","row");r.append(b1,b2);a.append(n,c,r)}
+function avatar(p){return el("span","av",p.name[0].toUpperCase())}
+const parts=v=>{const s=v.split("|");return{i:ico(s[0]),n:txt(s[0]),d:s[1]}};
+const info=(p,k)=>parts(val(p,k));
+function gcard(o){
+ const c=el("div","gc"+(o.rv?" rv":"")+(o.w?" w":"")+(o.hz?" hz":""));c.style.setProperty("--cc",o.col);
+ const b=el("div","gb");if(o.ico)b.append(el("div","gi",o.ico));if(o.body)b.append(el("div","gt",o.body));
+ c.append(el("div","gh",o.lab),b,el("div","gf",o.name));
+ if(o.btn){const x=el("button","gbtn","Reveal");x.onclick=o.btn;c.append(x)}return c}
+function tile(p,k,rv){const c=CATS.find(x=>x[0]===k),t=el("span","tile"+(rv?"":" lk"));t.style.setProperty("--cc",c[3]);
+ if(rv){const q=info(p,k);t.append(el("b","",q.i),el("i","",q.n))}else t.append(el("b","","🔒"),el("i","",c[1]));return t}
+function dossier(p,full){
+ const d=el("div","dos"+(p.out?" out":"")),h=el("div","dh");h.append(avatar(p),el("strong","",p.name));
+ if(p.out)h.append(el("em","","EXPELLED"));else if(p.off)h.append(el("em","","OFFLINE"));else if(S.phase==="reveal"&&p.rr>=1)h.append(el("em","rd","READY"));
+ const g=el("div","tiles");CATS.forEach(([k])=>g.append(tile(p,k,p.out||full||p.rev.includes(k))));d.append(h,g);return d}
+function myCard(p,k,can){const c=CATS.find(x=>x[0]===k),q=info(p,k);
+ return gcard({lab:c[1],ico:q.i,body:q.d,name:q.n,col:c[3],rv:p.rev.includes(k),w:k==="spec",btn:can?()=>send({type:"reveal",k}):0})}
+function board(a){
+ const ct=CAT[S.cat],b=el("div","box");
+ b.append(gcard({lab:"☢ Catastrophe",ico:ct[0],body:ct[2],name:ct[1],col:"#2a2a2a",w:1}));
+ const st=el("div","seats");for(let i=0;i<S.players.length;i++)st.append(i<S.cap?"🛏️":el("s","","🛏️"));
+ b.append(el("div","lab","Bunker spots: "+S.cap+" of "+S.players.length),st);
+ const hs=el("div","hs");S.bun.slice(0,S.round).forEach(i=>{const q=parts(D.bun[i]);hs.append(gcard({lab:"Bunker",ico:q.i,body:q.d,name:q.n,col:"#f2c200",hz:1}))});b.append(hs);
+ const nt=Math.floor(S.round/2);
+ if(nt){b.append(el("div","lab","Threats"));const h2=el("div","hs");S.thr.slice(0,nt).forEach(i=>{const q=parts(D.thr[i]);h2.append(gcard({lab:"Threat",ico:q.i,body:q.d,name:q.n,col:"#2a2a2a"}))});b.append(h2)}
+ a.append(b)}
+function render(){
+ const a=$("#app");a.textContent="";
+ if(!R){form(a);return}
+ a.append(el("div","stripe"),el("h1","","Bunker"),el("div","stripe"));
+ if(!S){
+  a.append(hl());a.append(el("div","lab c","Room code"));{const cd=el("div","code");code.toUpperCase().split("").forEach(x=>cd.append(el("span","",x)));a.append(cd)}
+  a.append(el("p","c mu","Friends open this page and join with the code. 3 to 8 players."));
+  const b=el("div","box");R.peers().filter(p=>p.presence.name).forEach(p=>b.append(el("span","chip",(p.presence.host?"👑 ":"")+String(p.presence.name)+(p.sameTab?" (you)":""))));a.append(b);
+  if(host){const g=el("button","pri","Start game");g.style.width="100%";g.onclick=startGame;a.append(g)}else a.append(el("p","c mu","Waiting for the host to start…"));a.append(lb());
+  return}
+ const me=myId(),mp=S.players.find(p=>p.id===me),al=alive(),nameOf=id=>S.players.find(p=>p.id===id).name;
+ a.append(lb());a.append(hl());board(a);
+ if(S.phase==="over"){
+  const o=el("div","box ok c");o.append(el("h2","","Bunker sealed"),el("div","mu","The survivors"));a.append(o);
+  al.forEach(p=>a.append(dossier(p,1)));const g=el("div","box");g.append(el("div","lab","Left outside"));S.players.filter(p=>p.out).forEach(p=>g.append(dossier(p)));a.append(g);return}
+ const sp2=el("div","steps");[["reveal","Reveal"],["vote","Vote"],["result","Verdict"]].forEach(([k,l])=>sp2.append(el("span",S.phase===k?"on":"",l)));
+ a.append(el("h2","c","Round "+S.round),sp2);
+ if(S.phase==="reveal")a.append(el("p","mu",S.round===1?"Everyone reveals their Profession.":"Reveal one card, then argue why you should stay. Special conditions are played out loud."));
+ if(S.phase==="vote"){const w=al.filter(p=>!p.off&&!S.votes[p.id]).map(p=>p.name);a.append(el("p","mu","Choose who to expel. Waiting for: "+(w.join(", ")||"nobody")))}
+ if(mp){
+  a.append(el("div","lab","Your file"+(mp.out?" · you are expelled":"")));
+  const g=el("div","grid");
+  CATS.forEach(([k])=>g.append(myCard(mp,k,S.phase==="reveal"&&!mp.out&&mp.rr<1&&!mp.rev.includes(k)&&(S.round>1||k==="prof"))));a.append(g)}
+ else a.append(el("p","mu","You are spectating."));
+ if(S.phase==="vote"&&mp&&!mp.out){
+  const v=el("div","box");v.append(el("div","lab","Your vote"));
+  al.filter(p=>p.id!==me).forEach(p=>{const b=el("button","vb"+(S.votes[me]===p.id?" sel":""));b.append(avatar(p),el("span","",p.name));b.onclick=()=>send({type:"vote",t:p.id});v.append(b)});a.append(v)}
+ if(S.phase==="result"){const r=el("div","box al c");r.append(el("div","stamp","EXPELLED"),el("h2","",nameOf(S.res.id)),el("div","mu",S.res.tie?"A tie. Fate chose.":"Majority vote."));a.append(r)}
+ a.append(el("div","lab","Players"));
+ S.players.forEach(p=>a.append(dossier(p,S.phase==="result"&&S.res.id===p.id)));
+ if(host){
+  const r=el("div","row");
+  if(S.phase==="reveal"){const b=el("button","pri","Start voting");b.disabled=!al.filter(p=>!p.off).every(p=>p.rr>=1||p.rev.length>=7);b.onclick=()=>hostGo("vote");r.append(b)}
+  if(S.phase==="result"){const b=el("button","pri","Next");b.onclick=()=>hostGo("next");r.append(b)}
+  a.append(r)}
+}
+render();
+</script></body></html>
